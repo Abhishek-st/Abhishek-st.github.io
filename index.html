@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Farmer Helper Home</title>
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+        
+    <link rel="stylesheet" href="assets/css/price_rangs.css">
+    <link rel="stylesheet" href="assets/css/flaticon.css">
+   
+    <link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="assets/css/themify-icons.css">
+    <link rel="stylesheet" href="assets/css/slick.css">
+    <link rel="stylesheet" href="assets/css/nice-select.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        #backgrounddesign{
+          background-image: linear-gradient( to left,#7dff88,#ffffff,#ffffff);
+        }
+      </style>
+</head>
+<body id="backgrounddesign">
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#"><img src="assets/img/logo.png"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="./failure.html">Failure</a>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Dropdown
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="./normalyield.html">Normal Yield</a>
+                  <a class="dropdown-item" href="./diseasedyield.html">Diseased Yield</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="./disease.html">Disease Prediction</a>
+                </div>
+              </li>
+            
+          </ul>
+          
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" id="guser" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" onclick="getuser()">Search</button>
+
+        </div>
+      </nav>
+<br><br>
+
+      <div class="container" id="mainbody">
+
+      </div>
+
+
+
+
+    <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-firestore.js"></script>
+	<script>
+	  // Your web app's Firebase configuration
+	  var firebaseConfig = {
+	    apiKey: "AIzaSyDDE9xO9FDtBlHBv8zGTBR2QW03KFnVIbw",
+	    authDomain: "farmers-gcpxee.firebaseapp.com",
+	    databaseURL: "https://farmers-gcpxee.firebaseio.com",
+	    projectId: "farmers-gcpxee",
+	    storageBucket: "farmers-gcpxee.appspot.com",
+	    messagingSenderId: "171601060339",
+	    appId: "1:171601060339:web:5257a4c330cad227cf3286",
+	    measurementId: "G-T5022BKMEB"
+	  };
+	  // Initialize Firebase
+	  firebase.initializeApp(firebaseConfig);
+  	  var db = firebase.firestore();	
+	</script>
+	
+	<script defer>
+
+    let userdat = []
+	db.collection("users").get().then(function(querySnapshot) {
+	    querySnapshot.forEach(function(doc) {
+		// doc.data() is never undefined for query doc snapshots
+		//console.log(doc.id, " => ", doc.data()['district']);
+
+        userdat.push(doc.data())
+        let x = document.getElementById('mainbody')
+        let dat = new Date(doc.data()['created'].seconds * 1000).toDateString();
+        x.innerHTML += `
+                <div class="single-job-items mb-30"  style="border-style: solid;border-width:0.5px;border-color:#656b65;">
+            <div class="job-items">
+                <div class="company-img">
+                    <a href="#"><img src="assets/img/icon/job-list2.png" alt=""></a>
+                </div>
+                <div class="job-tittle job-tittle2">
+                    <a href="#">
+                        <h4 onclick=fun(${doc.id})>${doc.id}</h4>
+                    </a> 
+                    <ul>
+                        <li style="font-size:20px;"><i style="color:#6e1594;font-size:25px;" class="fa fa-phone"></i>Registered : ${dat}</li>
+                        <li style="font-size:20px;"><i style="color:#f7253e;font-size:25px;" class="fas fa-map-marker-alt"></i>Location : ${doc.data()['district']}</li>
+                    </ul>
+                </div>
+            </div>
+        
+        
+        `
+
+
+
+
+	    });
+    });
+    
+
+    function fun(id){
+        let ywd = []
+        let ywod = []
+        //console.log(String(id))
+        db.collection("users").doc('+' + String(id)).collection('yieldWithDisease').get().then(function(querySnapshot) {
+	    querySnapshot.forEach(function(docu) {
+		// doc.data() is never undefined for query doc snapshots
+		console.log(docu.id, " => ", docu.data());
+            ywd.push(docu.data())
+	    });
+
+
+	});
+	db.collection("users").doc('+' + String(id)).collection('yieldWithoutDisease').get().then(function(querySnapshot) {
+	    querySnapshot.forEach(function(docu2) {
+		// doc.data() is never undefined for query doc snapshots
+        //console.log(docu.id, " => ", docu.data());
+        
+        ywod.push(docu2.data())
+	    });
+
+
+    }
+    ).then(()=> fun2(ywd,ywod));
+
+    //console.log(ywd)
+    //console.log(ywod)
+
+        //fun2(ywd,ywod)
+
+    }
+
+    function fun2(ywd,ywod){
+
+        sessionStorage.setItem("wd", JSON.stringify(ywd));
+        sessionStorage.setItem("wod", JSON.stringify(ywod));
+        window.location.replace("./history.html")
+    }
+
+    function getuser(){
+        let user= document.getElementById('guser').value;
+        console.log(user)
+        userdat.forEach(element => {
+          if(element.registeredPhoneNumber == user){
+            let x = document.getElementById('mainbody')
+        let dat = new Date(element['created'].seconds * 1000).toDateString();
+        x.innerHTML = `
+                <div class="single-job-items mb-30"  style="border-style: solid;border-width:0.5px;border-color:#656b65;">
+            <div class="job-items">
+                <div class="company-img">
+                    <a href="#"><img src="assets/img/icon/job-list2.png" alt=""></a>
+                </div>
+                <div class="job-tittle job-tittle2">
+                    <a href="#">
+                        <h4 onclick=fun(${element.registeredPhoneNumber})>${element.registeredPhoneNumber}</h4>
+                    </a> 
+                    <ul>
+                        <li style="font-size:20px;"><i style="color:#6e1594;font-size:25px;" class="fa fa-phone"></i>Registered : ${dat}</li>
+                        <li style="font-size:20px;"><i style="color:#f7253e;font-size:25px;" class="fas fa-map-marker-alt"></i>Location : ${element['district']}</li>
+                    </ul>
+                </div>
+            </div>
+        
+        
+        `
+
+          }
+            
+        });
+    }
+       </script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    
+</body>
+</html>

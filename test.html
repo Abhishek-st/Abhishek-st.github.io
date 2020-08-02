@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Agriculture |Login</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8">
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="style2.css">
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+              <div class="image col" >
+            <img src="farm.png"style="margin-top:10%;width:400px;">
+            <p id='ans'></p>
+            </div>
+            
+        <div class="form col">
+          
+
+            
+            <div class>
+       
+              <div id="login">   
+                <h1>Area</h1>
+                
+                
+                  <div class="field-wrap">
+                  <label>
+                    lat1<span class="req">*</span>
+                  </label>
+                  <input type="text"required autocomplete="off" id='lat1'/>
+                </div>
+                
+                <div class="field-wrap">
+                    <label>
+                      lon1<span class="req">*</span>
+                    </label>
+                    <input type="text"required autocomplete="off" id='lon1'/>
+                  </div>
+                  <div class="field-wrap">
+                    <label>
+                      lat2<span class="req">*</span>
+                    </label>
+                    <input type="text"required autocomplete="off" id='lat2'/>
+                  </div>
+                  <div class="field-wrap">
+                    <label>
+                      lon2<span class="req">*</span>
+                    </label>
+                    <input type="text"required autocomplete="off" id='lon2'/>
+                  </div>
+                  <div class="field-wrap">
+                    <label>
+                      lat3<span class="req">*</span>
+                    </label>
+                    <input type="text"required autocomplete="off" id='lat3'/>
+                  </div>
+                <div class="field-wrap">
+                  <label>
+                    lon3<span class="req">*</span>
+                  </label>
+                  <input type="text"required autocomplete="off" id='lon3'/>
+                </div>
+                
+                
+                
+                <button class="button button-block" onclick="area()">Area</button>
+    
+      
+              </div>
+              
+            </div>
+            
+      </div> 
+      </div>
+      </div>
+    
+      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
+        <script type="text/javascript" src="chk.js"></script>
+        </body>
+        </html>
+
+
+
+<script>
+
+function distance(lat1, lon1, lat2, lon2, unit) {
+	if ((lat1 == lat2) && (lon1 == lon2)) {
+		return 0;
+	}
+	else {
+		var radlat1 = Math.PI * lat1/180;
+		var radlat2 = Math.PI * lat2/180;
+		var theta = lon1-lon2;
+		var radtheta = Math.PI * theta/180;
+		var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+		if (dist > 1) {
+			dist = 1;
+		}
+		dist = Math.acos(dist);
+		dist = dist * 180/Math.PI;
+		dist = dist * 60 * 1.1515;
+		if (unit=="K") { dist = dist * 1.609344 }
+		if (unit=="N") { dist = dist * 0.8684 }
+		return dist;
+	}
+}
+
+
+
+function area(){
+
+    let lat1 = document.getElementById('lat1').value
+let lon1 = document.getElementById('lon1').value
+let lat2 = document.getElementById('lat2').value
+let lon2 = document.getElementById('lon2').value
+let lat3 = document.getElementById('lat3').value
+let lon3 = document.getElementById('lon3').value
+
+console.log(lat1)
+console.log(lon1)
+console.log(lat2)
+console.log(lon2)
+console.log(lat3)
+console.log(lon3)
+
+    let dis1 = distance(lat1,lon1, lat2,lon2, 'K')
+    let dis2 = distance(lat2,lon2, lat3,lon3, 'K')
+
+    let p = document.getElementById('ans')
+    p.innerHTML = `your area is : ${dis1 * dis2} km.sq`
+}
+
+
+
+
+
+</script>

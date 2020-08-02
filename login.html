@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Agriculture |Login</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8">
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="style2.css">
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+              <div class="image col" >
+            <img src="farm.png"style="margin-top:10%;width:400px;">
+            </div>
+            
+        <div class="form col">
+          
+
+            
+            <div class>
+       
+              <div id="login">   
+                <h1>Welcome Back!</h1>
+                
+                
+                  <div class="field-wrap">
+                  <label>
+                    Name<span class="req">*</span>
+                  </label>
+                  <input type="text"required autocomplete="off" id='id'/>
+                </div>
+                
+                <div class="field-wrap">
+                  <label>
+                    Password<span class="req">*</span>
+                  </label>
+                  <input type="password"required autocomplete="off" id='pass'/>
+                </div>
+                
+                
+                
+                <button class="button button-block" onclick='auth()'>Log In</button>
+    
+      
+              </div>
+              
+            </div>
+            
+      </div> 
+      </div>
+      </div>
+    
+      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    
+
+    <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-firestore.js"></script>
+	<script>
+	  // Your web app's Firebase configuration
+	  var firebaseConfig = {
+	    apiKey: "AIzaSyDDE9xO9FDtBlHBv8zGTBR2QW03KFnVIbw",
+	    authDomain: "farmers-gcpxee.firebaseapp.com",
+	    databaseURL: "https://farmers-gcpxee.firebaseio.com",
+	    projectId: "farmers-gcpxee",
+	    storageBucket: "farmers-gcpxee.appspot.com",
+	    messagingSenderId: "171601060339",
+	    appId: "1:171601060339:web:5257a4c330cad227cf3286",
+	    measurementId: "G-T5022BKMEB"
+	  };
+	  // Initialize Firebase
+	  firebase.initializeApp(firebaseConfig);
+  	  var db = firebase.firestore();	
+  </script>
+  
+  <script>
+  
+  
+  </script>
+
+
+
+
+
+
+
+    <script>
+      function auth(){
+        let id = document.getElementById('id').value
+        let pass = document.getElementById('pass').value
+
+        console.log(id)
+        console.log(pass)
+
+        if(id=='ast_technobuilders' && pass=='1234'){
+          sessionStorage.setItem("verify", JSON.stringify('true'));
+          window.location.replace("./failure.html")
+        }
+        else{
+          console.log('wrong credentials')
+        }
+      }
+    </script>
+
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
+        <script type="text/javascript" src="chk.js"></script>
+        </body>
+        </html>

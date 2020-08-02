@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Diseased Yield</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8">
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="style2.css">
+    </head>
+    <body>
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#"><img src="assets/img/logo.png"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                  <a class="nav-link" href="./index.html">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="./failure.html">Failure</a>
+                </li>
+    
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Dropdown
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <a class="dropdown-item" href="./normalyield.html">Normal Yield</a>
+                      <a class="dropdown-item" href="./diseasedyield.html">Diseased Yield</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="./disease.html">Disease Prediction</a>
+                    </div>
+                  </li>
+                
+              </ul>
+              
+            </div>
+          </nav>
+
+
+        <div class="container">
+            <div class="row">
+              <div class="image col" >
+            <img src="farm.png"style="margin-top:10%;width:400px;">
+            <p id="yield"></p>
+            </div>
+            
+        <div class="form col">
+          
+
+            
+            <div class>
+       
+              <div id="login">   
+                <h1>Predict Diseased Crop Yield</h1>
+                
+                
+                  <div class="field-wrap">
+                  <label>
+                    Disease<span class="req">*</span>
+                  </label>
+                  <input type="text"required autocomplete="off" id='dis'/>
+                </div>
+                
+                <div class="field-wrap">
+                  <label>
+                    Area Affected<span class="req">*</span>
+                  </label>
+                  <input type="text"required autocomplete="off" id='area'/>
+                </div>
+
+                <div class="field-wrap">
+                    <label>
+                      Stage<span class="req">*</span>
+                    </label>
+                    <input type="text"required autocomplete="off" id='stage'/>
+                  </div>
+                  
+                
+                
+                
+                <button class="button button-block" onclick='auth()'>Predict</button>
+    
+      
+              </div>
+              
+            </div>
+            
+      </div> 
+      </div>
+      </div>
+    
+      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    
+
+    <script>
+      function auth(){
+        let dis = document.getElementById('dis').value
+        let area = document.getElementById('area').value
+        let stage = document.getElementById('stage').value
+        
+        console.log(dis)
+        console.log(area)
+        console.log(stage)
+        
+
+        fetch("http://127.0.0.1:5000/dis", { 
+      
+      // Adding method type 
+      method: "POST", 
+        
+      // Adding body or contents to send 
+      body: JSON.stringify({ 
+        disease:dis,
+        area_affected:area,
+        stage:stage
+      }), 
+        
+      // Adding headers to the request 
+      headers: { 
+          "Content-type": "application/json; charset=UTF-8"
+      } 
+  }) 
+    
+  // Converting to JSON 
+  .then(response => response.json()) 
+    
+  // Displaying results to console 
+  .then(json => {
+
+      let y = document.getElementById('yield')
+      y.innerHTML = `Yor diseased estimated yield is ${json*100}`
+  }); 
+
+      }
+    </script>
+
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
+        <script type="text/javascript" src="chk.js"></script>
+        </body>
+        </html>

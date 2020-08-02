@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Failure</title>
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+        
+    <link rel="stylesheet" href="assets/css/price_rangs.css">
+    <link rel="stylesheet" href="assets/css/flaticon.css">
+   
+    <link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="assets/css/themify-icons.css">
+    <link rel="stylesheet" href="assets/css/slick.css">
+    <link rel="stylesheet" href="assets/css/nice-select.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <style>
+      #backgrounddesign{
+        background-image: linear-gradient( to left,#7dff88,#ffffff,#ffffff);
+      }
+    </style>
+</head>
+<body  id="backgrounddesign">
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#"><img src="assets/img/logo.png"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="./index.html">Home </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Failure<span class="sr-only">(current)</span></a>
+            </li>
+            
+          </ul>
+          
+
+        </div>
+      </nav>
+
+    <br>
+    <div class="container">
+    <h2>Crop Failure Reports</h2>
+</div>
+
+    <div class="container" id="mainbody">
+
+    </div>
+
+
+
+    <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-firestore.js"></script>
+	<script>
+	  // Your web app's Firebase configuration
+	  var firebaseConfig = {
+	    apiKey: "AIzaSyDDE9xO9FDtBlHBv8zGTBR2QW03KFnVIbw",
+	    authDomain: "farmers-gcpxee.firebaseapp.com",
+	    databaseURL: "https://farmers-gcpxee.firebaseio.com",
+	    projectId: "farmers-gcpxee",
+	    storageBucket: "farmers-gcpxee.appspot.com",
+	    messagingSenderId: "171601060339",
+	    appId: "1:171601060339:web:5257a4c330cad227cf3286",
+	    measurementId: "G-T5022BKMEB"
+	  };
+	  // Initialize Firebase
+	  firebase.initializeApp(firebaseConfig);
+  	  var db = firebase.firestore();	
+	</script>
+
+<script >
+
+db.collection("failure").get().then(function(querySnapshot) {
+	    querySnapshot.forEach(function(doc) {
+		// doc.data() is never undefined for query doc snapshots
+		//console.log(doc.id, " => ", doc.data()['district']);
+
+    
+        let x = document.getElementById('mainbody')
+        let dat = new Date(doc.data()['created'].seconds * 1000).toDateString();
+        if(doc.data()['status'] == 'f'){
+
+	let lat1 = doc.data()['Lattitude1']
+	let lon1 = doc.data()['Longittude1']
+	let lat2 = doc.data()['Lattitude2']
+	let lon2 = doc.data()['Longittude2']
+	let lat3 = doc.data()['Lattitude3']
+	let lon3 = doc.data()['Longittude3']
+    let dis1 = distance(lat1,lon1, lat2,lon2, 'K')
+    let dis2 = distance(lat2,lon2, lat3,lon3, 'K')
+
+console.log(dis1*dis2)
+
+
+        x.innerHTML += `
+        <div class="single-job-items mb-30"  style="border-style: solid;border-width:0.5px;border-color:#656b65;">
+                                    <div class="job-items">
+                                        <div class="company-img">
+                                            <a href="#"><img src="assets/img/icon/job-list2.png" alt=""></a>
+                                        </div>
+                                        <div class="job-tittle job-tittle2">
+                                            <a href="#">
+                                                <h4>${doc.data()['registeredPhoneNumber']}</h4>
+                                            </a>
+                                            <ul>
+                                                
+                                                <li style="font-size:20px;"><i style="color:#f7253e;font-size:25px;" class="fas fa-map-marker-alt"></i>Area : ${doc.data()['area']}</li>
+<li style="font-size:20px;"><i style="color:#f7253e;font-size:25px;" class="fas fa-map-marker-alt"></i>ActualArea : ${dis1*dis2} km.sq</li>
+                                                <li style="font-size:20px;"><i style="color:#369c11;font-size:25px;" class="fa fa-leaf"></i>Crop : ${doc.data()['crop']}</li>
+                                                <li style="font-size:20px;"><i style="color:#1525d6;font-size:25px;" class="fa fa-medkit"></i>Yield : ${doc.data()['estimatedYield']}</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <button class="btn btn-outline-success my-2 my-sm-0" onclick=fun(${"'"+String(doc.id)+"'"})>Resolve</button>
+                                
+                                </div>
+        
+        
+        `
+                            }
+
+	    });
+    });
+    
+
+
+function distance(lat1, lon1, lat2, lon2, unit) {
+	if ((lat1 == lat2) && (lon1 == lon2)) {
+		return 0;
+	}
+	else {
+		var radlat1 = Math.PI * lat1/180;
+		var radlat2 = Math.PI * lat2/180;
+		var theta = lon1-lon2;
+		var radtheta = Math.PI * theta/180;
+		var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+		if (dist > 1) {
+			dist = 1;
+		}
+		dist = Math.acos(dist);
+		dist = dist * 180/Math.PI;
+		dist = dist * 60 * 1.1515;
+		if (unit=="K") { dist = dist * 1.609344 }
+		if (unit=="N") { dist = dist * 0.8684 }
+		return dist;
+	}
+}
+
+
+
+function area(){
+
+
+console.log(lat1)
+console.log(lon1)
+console.log(lat2)
+console.log(lon2)
+console.log(lat3)
+console.log(lon3)
+
+    let dis1 = distance(lat1,lon1, lat2,lon2, 'K')
+    let dis2 = distance(lat2,lon2, lat3,lon3, 'K')
+
+    let p = document.getElementById('ans')
+    p.innerHTML = `your area is : ${dis1 * dis2} km.sq`
+}
+
+
+
+
+</script>
+
+<script>
+
+function fun(id2){
+  let ver = JSON.parse(sessionStorage.getItem("verify"));
+  if(ver=='true'){
+    db.collection('failure').doc(id2).update({
+        status: 't'
+}).then(() => location.reload());
+  }
+  else{
+    window.location.replace("./login.html")
+  }
+
+    }
+    // 
+</script>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    
+</body>
+</html>

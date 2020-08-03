@@ -53,7 +53,7 @@
       // Create a Recaptcha verifier instance globally
       // Calls submitPhoneNumberAuth() when the captcha is verified
 window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('sign-in-button', {
-  'size': 'normal',
+  'size': 'invisible',
   'callback': function(response) {
     // reCAPTCHA solved, allow signInWithPhoneNumber.
     submitPhoneNumberAuth();

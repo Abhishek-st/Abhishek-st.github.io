@@ -44,13 +44,11 @@
 
 
         <div class="container">
-            <div class="row">
-              <div class="image col" >
-            <img src="farm.png"style="margin-top:10%;width:400px;">
-            <p id="yield"></p>
-            </div>
             
-        <div class="form col">
+            <p id="yield"></p>
+           
+            
+        <div class="form">
           
 
             
@@ -85,7 +83,8 @@
                 
                 
                 <button class="button button-block" onclick='auth()'>Predict</button>
-    
+
+   
       
               </div>
               
@@ -136,7 +135,7 @@
   .then(json => {
 
       let y = document.getElementById('yield')
-      y.innerHTML = `Yor diseased estimated yield is ${json*100}`
+      y.innerHTML = `Yor diseased estimated yield is ${json*100} %`
   }); 
 
       }

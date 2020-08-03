@@ -115,6 +115,7 @@ window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('sign-in-button',
           .then(function(result) {
             var user = result.user;
             console.log(user.phoneNumber);
+            sessionStorage.setItem("phone", JSON.stringify(phoneNumber));
           })
           .catch(function(error) {
             console.log(error);

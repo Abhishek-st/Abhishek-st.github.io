@@ -103,6 +103,26 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     
+    <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-firestore.js"></script>
+	<script>
+	  // Your web app's Firebase configuration
+	  var firebaseConfig = {
+	    apiKey: "AIzaSyDDE9xO9FDtBlHBv8zGTBR2QW03KFnVIbw",
+	    authDomain: "farmers-gcpxee.firebaseapp.com",
+	    databaseURL: "https://farmers-gcpxee.firebaseio.com",
+	    projectId: "farmers-gcpxee",
+	    storageBucket: "farmers-gcpxee.appspot.com",
+	    messagingSenderId: "171601060339",
+	    appId: "1:171601060339:web:5257a4c330cad227cf3286",
+	    measurementId: "G-T5022BKMEB"
+	  };
+	  // Initialize Firebase
+	  firebase.initializeApp(firebaseConfig);
+  	  var db = firebase.firestore();	
+	</script>
+
+
 
     <script>
       function auth(){
@@ -143,9 +163,34 @@
 
 let y = document.getElementById('yield')
 y.innerHTML = `Yor normal estimated yield is ${json}`
+
+let phone = JSON.parse(sessionStorage.getItem("phone"));
+
+if(phone){
+db.collection('users').doc(phone).collection('yieldWithoutDisease').set({
+    area: 1000,
+    district: dist,
+    crop: crop,
+    predictedYield:json,
+    season: season,
+    created: firebase.firestore.FieldValue.serverTimestamp()
+})
+.then(function() {
+    console.log("Document successfully written!");
+})
+.catch(function(error) {
+    console.error("Error writing document: ", error);
+});
+}
+
+else{
+window.location.replace("./test.html")
+}
+
 }); 
 
       }
+
     </script>
 
 

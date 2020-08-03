@@ -31,7 +31,7 @@ margin-top:50px;
                   <label>
                     Code<span class="req">*</span>
                   </label>
-                  <input type="password" autocomplete="off" id='code'/>
+                  <input type="text" autocomplete="off" id='code'/>
                 </div>
                 
                 
@@ -116,6 +116,7 @@ window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('sign-in-button',
             var user = result.user;
             console.log(user.phoneNumber);
             sessionStorage.setItem("phone", JSON.stringify(user.phoneNumber));
+	    window.location.replace("./index.html")
           })
           .catch(function(error) {
             console.log(error);

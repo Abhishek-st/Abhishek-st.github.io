@@ -164,7 +164,7 @@
 let y = document.getElementById('yield')
 y.innerHTML = `Yor normal estimated yield is ${json}`
 
-let phone = JSON.parse(sessionStorage.getItem("phone"));
+phone = JSON.parse(sessionStorage.getItem("phone"));
 console.log(phone)
 //if(phone){
 db.collection('users').doc(phone).collection('yieldWithoutDisease').set({

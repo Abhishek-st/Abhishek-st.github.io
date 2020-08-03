@@ -77,14 +77,13 @@
   	  var db = firebase.firestore();	
 	</script>
 
-<script >
+<script defer>
 
 db.collection("failure").get().then(function(querySnapshot) {
 	    querySnapshot.forEach(function(doc) {
 		// doc.data() is never undefined for query doc snapshots
 		//console.log(doc.id, " => ", doc.data()['district']);
 
-    
         let x = document.getElementById('mainbody')
         let dat = new Date(doc.data()['created'].seconds * 1000).toDateString();
         if(doc.data()['status'] == 'f'){
@@ -101,6 +100,7 @@ db.collection("failure").get().then(function(querySnapshot) {
 console.log(dis1*dis2)
 
 
+
         x.innerHTML += `
         <div class="single-job-items mb-30"  style="border-style: solid;border-width:0.5px;border-color:#656b65;">
                                     <div class="job-items">
@@ -109,7 +109,7 @@ console.log(dis1*dis2)
                                         </div>
                                         <div class="job-tittle job-tittle2">
                                             <a href="#">
-                                                <h4>${doc.data()['registeredPhoneNumber']}</h4>
+                                                <h4 onclick=fune(${"'"+String(doc.id)+"'"})>${doc.data()['registeredPhoneNumber']}</h4>
                                             </a>
                                             <ul>
                                                 
@@ -156,7 +156,12 @@ function distance(lat1, lon1, lat2, lon2, unit) {
 	}
 }
 
+function fune(id){
+console.log(id)
+sessionStorage.setItem("failimg", JSON.stringify(id));
+window.location.replace("./histimg.html")
 
+}
 
 function area(){
 

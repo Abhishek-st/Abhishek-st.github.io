@@ -173,7 +173,8 @@ db.collection('users').doc(phone).collection('yieldWithoutDisease').add({
     crop: crop,
     predictedYield:json,
     season: season,
-    created: firebase.firestore.FieldValue.serverTimestamp()
+    created: firebase.firestore.FieldValue.serverTimestamp(),
+    registeredPhoneNumber:phone
 })
 .then(function() {
     console.log("Document successfully written!");

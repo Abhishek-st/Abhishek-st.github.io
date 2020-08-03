@@ -165,8 +165,8 @@ let y = document.getElementById('yield')
 y.innerHTML = `Yor normal estimated yield is ${json}`
 
 let phone = JSON.parse(sessionStorage.getItem("phone"));
-
-if(phone){
+console.log(phone)
+//if(phone){
 db.collection('users').doc(phone).collection('yieldWithoutDisease').set({
     area: 1000,
     district: dist,
@@ -181,11 +181,11 @@ db.collection('users').doc(phone).collection('yieldWithoutDisease').set({
 .catch(function(error) {
     console.error("Error writing document: ", error);
 });
-}
+//}
 
-else{
-window.location.replace("./test.html")
-}
+//else{
+//window.location.replace("./test.html")
+//}
 
 }); 
 

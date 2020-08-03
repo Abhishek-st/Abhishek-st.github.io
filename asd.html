@@ -1,0 +1,16 @@
+<html>
+    <head>
+        <title>Browser Location</title>
+    </head>
+    <body>
+        <script type="text/javascript">
+            if(navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(position => {
+                    console.log(position.coords);
+                });
+            } else {
+                console.error("Geolocation is not supported by this browser!");
+            }
+        </script>
+    </body>
+</html>

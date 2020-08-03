@@ -88,12 +88,12 @@ db.collection("failure").get().then(function(querySnapshot) {
         let dat = new Date(doc.data()['created'].seconds * 1000).toDateString();
         if(doc.data()['status'] == 'f'){
 
-	let lat1 = doc.data()['lattitude1']
-	let lon1 = doc.data()['longittude1']
-	let lat2 = doc.data()['lattitude2']
-	let lon2 = doc.data()['longittude2']
-	let lat3 = doc.data()['lattitude3']
-	let lon3 = doc.data()['longittude3']
+	let lat1 = doc.data()['latitude1']
+	let lon1 = doc.data()['longitude1']
+	let lat2 = doc.data()['latitude2']
+	let lon2 = doc.data()['longitude2']
+	let lat3 = doc.data()['latitude3']
+	let lon3 = doc.data()['longitude3']
     let dis1 = distance(lat1,lon1, lat2,lon2, 'K')
     let dis2 = distance(lat2,lon2, lat3,lon3, 'K')
 
@@ -114,9 +114,9 @@ console.log(dis1*dis2)
                                             <ul>
                                                 
                                                 <li style="font-size:20px;"><i style="color:#f7253e;font-size:25px;" class="fas fa-map-marker-alt"></i>Area : ${doc.data()['area']}</li>
-<li style="font-size:20px;"><i style="color:#f7253e;font-size:25px;" class="fas fa-map-marker-alt"></i>ActualArea : ${dis1*dis2} km.sq</li>
+<li style="font-size:20px;"><i style="color:#f7253e;font-size:25px;" class="fas fa-map-marker-alt"></i>ActualArea : ${dis1*dis2*100} hect</li>
                                                 <li style="font-size:20px;"><i style="color:#369c11;font-size:25px;" class="fa fa-leaf"></i>Crop : ${doc.data()['crop']}</li>
-                                                <li style="font-size:20px;"><i style="color:#1525d6;font-size:25px;" class="fa fa-medkit"></i>Yield : ${doc.data()['estimatedYield']}</li>
+                                                <li style="font-size:20px;"><i style="color:#1525d6;font-size:25px;" class="fa fa-medkit"></i>Yield : ${doc.data()['yield']}</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -135,10 +135,7 @@ console.log(dis1*dis2)
 
 
 function distance(lat1, lon1, lat2, lon2, unit) {
-	if ((lat1 == lat2) && (lon1 == lon2)) {
-		return 0;
-	}
-	else {
+	
 		var radlat1 = Math.PI * lat1/180;
 		var radlat2 = Math.PI * lat2/180;
 		var theta = lon1-lon2;
@@ -153,7 +150,7 @@ function distance(lat1, lon1, lat2, lon2, unit) {
 		if (unit=="K") { dist = dist * 1.609344 }
 		if (unit=="N") { dist = dist * 0.8684 }
 		return dist;
-	}
+	
 }
 
 function fune(id){
